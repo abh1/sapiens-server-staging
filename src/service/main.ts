@@ -1,5 +1,5 @@
 const mainService = () => {
-  return "hello";
+  return "App up and running";
 };
 
 export default mainService;

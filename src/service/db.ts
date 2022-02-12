@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-let uri = "mongodb://localhost:27017/{app}";
+let uri = "mongodb://localhost:27017/sapien";
 
 const connect = async () => {
   try {
