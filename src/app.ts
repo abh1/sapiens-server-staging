@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import MainRouter from "./routes/main";
 import UserRouter from "./routes/user";
+import ArticleRouter from "./routes/article";
 import dbService from "./service/db";
 
 const cors = require("cors");
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 // Routes
 app.use("/", MainRouter);
 app.use("/user", UserRouter);
+app.use("/article", ArticleRouter);
 
 const init = async () => {
   try {
