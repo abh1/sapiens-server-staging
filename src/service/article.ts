@@ -5,6 +5,7 @@ const add = async (title: String, content: String, publicKey: string) => {
     owner: publicKey,
     title,
     content,
+    state: "DRAFT",
   });
   await newArticle.save();
 };

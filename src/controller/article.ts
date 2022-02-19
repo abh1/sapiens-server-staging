@@ -7,6 +7,7 @@ const add = async (req: express.Request, res: express.Response) => {
   const publicKey = req.publicKey;
   if (!publicKey) {
     res.status(401).send("Unauthorized request");
+    return;
   }
   try {
     await articleService.add(title, content, publicKey);
@@ -22,6 +23,7 @@ const editTitle = async (req: express.Request, res: express.Response) => {
   const publicKey = req.publicKey;
   if (!publicKey) {
     res.status(401).send("Unauthorized request");
+    return;
   }
   try {
     await articleService.editTitle(_id, title, publicKey);
@@ -37,6 +39,7 @@ const editContent = async (req: express.Request, res: express.Response) => {
   const publicKey = req.publicKey;
   if (!publicKey) {
     res.status(401).send("Unauthorized request");
+    return;
   }
   try {
     await articleService.editTitle(_id, content, publicKey);
@@ -52,6 +55,7 @@ const remove = async (req: express.Request, res: express.Response) => {
   const publicKey = req.publicKey;
   if (!publicKey) {
     res.status(401).send("Unauthorized request");
+    return;
   }
   try {
     await articleService.remove(_id, publicKey);
