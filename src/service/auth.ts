@@ -1,35 +1,22 @@
-import crypto from "crypto";
 import { User } from "../model/user";
+require("dotenv").config();
 
-const login = async () => {};
+const jwt = require("jsonwebtoken");
 
-const getNonce = async (publicKey: string) => {
-  const userExists = await User.findOne({
+const login = async (publicKey: string) => {
+  const user = await User.findOne({
     publicKey,
   });
-  const nonce = crypto.randomBytes(48).toString("base64url");
-  if (!userExists) {
+  if (!user) {
     const newUser = new User({
       publicKey,
-      nonce,
     });
     await newUser.save();
-  } else {
-    await User.updateOne(
-      {
-        publicKey,
-      },
-      {
-        $set: {
-          nonce,
-        },
-      }
-    );
   }
-  return nonce;
+  const token = jwt.sign({ publicKey }, process.env.JWT_SECRET_KEY);
+  return token;
 };
 
 export default {
   login,
-  getNonce,
 };
