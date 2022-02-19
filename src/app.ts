@@ -5,6 +5,7 @@ import UserRouter from "./routes/user";
 import ArticleRouter from "./routes/article";
 import AuthRouter from "./routes/auth";
 import dbService from "./service/db";
+import { withAuthRequest } from "./middleware/auth";
 
 const cors = require("cors");
 
