@@ -4,5 +4,7 @@ import articleController from "../controller/article";
 import { withAuthRequest } from "../middleware/auth";
 
 router.post("/add", withAuthRequest, articleController.add);
+router.post("/edit/title", withAuthRequest, articleController.editTitle);
+router.post("/edit/content", withAuthRequest, articleController.editContent);
 
 export default router;
