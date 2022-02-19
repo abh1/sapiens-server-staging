@@ -9,6 +9,13 @@ const add = async (title: String, content: String, publicKey: string) => {
   await newArticle.save();
 };
 
+const remove = async (_id: String, publicKey: string) => {
+  Article.deleteOne({
+    _id,
+    owner: publicKey,
+  });
+};
+
 const editTitle = async (_id: string, title: String, publicKey: string) => {
   await Article.updateOne(
     {
@@ -41,4 +48,5 @@ export default {
   add,
   editTitle,
   editContent,
+  remove,
 };
