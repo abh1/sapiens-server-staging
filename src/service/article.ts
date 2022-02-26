@@ -10,6 +10,13 @@ const add = async (title: String, content: String, publicKey: string) => {
   await newArticle.save();
 };
 
+const get = async (_id: string) => {
+  const result = await Article.findOne({
+    _id,
+  });
+  return result;
+};
+
 const remove = async (_id: String, publicKey: string) => {
   Article.deleteOne({
     _id,
@@ -17,37 +24,55 @@ const remove = async (_id: String, publicKey: string) => {
   });
 };
 
-const editTitle = async (_id: string, title: String, publicKey: string) => {
-  await Article.updateOne(
-    {
-      _id,
-      owner: publicKey,
-    },
-    {
-      $set: {
-        title,
+const upsert = async (
+  id: string,
+  content: String,
+  heading: string,
+  publicKey: string
+) => {
+  const article = await Article.findOne({
+    _id: id,
+  });
+
+  if (article) {
+    await Article.updateOne(
+      {
+        _id: id,
+        owner: publicKey,
       },
-    }
-  );
+      {
+        $set: {
+          content,
+          heading,
+        },
+      }
+    );
+  } else {
+    const newArticle = new Article({
+      _id: id,
+      content,
+      heading,
+    });
+    await newArticle.save();
+  }
 };
 
-const editContent = async (_id: string, content: String, publicKey: string) => {
-  await Article.updateOne(
-    {
-      _id,
-      owner: publicKey,
-    },
-    {
-      $set: {
-        content,
-      },
-    }
-  );
+const getArticlesOfUser = async (publicKey: string) => {
+  const results = await Article.find({
+    owner: publicKey,
+  });
+  const articleList = results.map((result) => ({
+    _id: result._id,
+    content: result.content,
+    heading: result.heading,
+  }));
+  return articleList;
 };
 
 export default {
   add,
-  editTitle,
-  editContent,
   remove,
+  getArticlesOfUser,
+  get,
+  upsert,
 };

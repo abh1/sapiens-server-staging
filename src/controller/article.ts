@@ -1,8 +1,8 @@
 import express from "express";
 import articleService from "../service/article";
 
-const add = async (req: express.Request, res: express.Response) => {
-  const { title, content } = req.body;
+const get = async (req: express.Request, res: express.Response) => {
+  const { id }: any = req.query;
   //@ts-ignore
   const publicKey = req.publicKey;
   if (!publicKey) {
@@ -10,15 +10,15 @@ const add = async (req: express.Request, res: express.Response) => {
     return;
   }
   try {
-    await articleService.add(title, content, publicKey);
-    res.status(200).send("ok");
+    const article = await articleService.get(id);
+    res.status(200).send(article);
   } catch (err) {
-    res.status(500).send("Unable to add article");
+    res.status(500).send("Unable to get article");
   }
 };
 
-const editTitle = async (req: express.Request, res: express.Response) => {
-  const { _id, title } = req.body;
+const update = async (req: express.Request, res: express.Response) => {
+  const { id, heading, content } = req.body;
   //@ts-ignore
   const publicKey = req.publicKey;
   if (!publicKey) {
@@ -26,25 +26,11 @@ const editTitle = async (req: express.Request, res: express.Response) => {
     return;
   }
   try {
-    await articleService.editTitle(_id, title, publicKey);
+    console.log({ id, content, heading });
+    await articleService.upsert(id, content, heading, publicKey);
     res.status(200).send("ok");
   } catch (err) {
-    res.status(500).send("Unable to add article");
-  }
-};
-
-const editContent = async (req: express.Request, res: express.Response) => {
-  const { _id, content } = req.body;
-  //@ts-ignore
-  const publicKey = req.publicKey;
-  if (!publicKey) {
-    res.status(401).send("Unauthorized request");
-    return;
-  }
-  try {
-    await articleService.editTitle(_id, content, publicKey);
-    res.status(200).send("ok");
-  } catch (err) {
+    console.log(err);
     res.status(500).send("Unable to add article");
   }
 };
@@ -65,9 +51,25 @@ const remove = async (req: express.Request, res: express.Response) => {
   }
 };
 
+const list = async (req: express.Request, res: express.Response) => {
+  //@ts-ignore
+  const publicKey = req.publicKey;
+  if (!publicKey) {
+    res.status(401).send("Unauthorized request");
+    return;
+  }
+  try {
+    const articleList = await articleService.getArticlesOfUser(publicKey);
+
+    res.status(200).send(articleList);
+  } catch (err) {
+    res.status(500).send("Unable to remove article");
+  }
+};
+
 export default {
-  add,
-  editTitle,
-  editContent,
+  update,
   remove,
+  list,
+  get,
 };
