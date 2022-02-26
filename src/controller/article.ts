@@ -36,15 +36,16 @@ const update = async (req: express.Request, res: express.Response) => {
 };
 
 const remove = async (req: express.Request, res: express.Response) => {
-  const { _id } = req.body;
+  const { id }: any = req.query;
   //@ts-ignore
   const publicKey = req.publicKey;
+
   if (!publicKey) {
     res.status(401).send("Unauthorized request");
     return;
   }
   try {
-    await articleService.remove(_id, publicKey);
+    await articleService.remove(id, publicKey);
     res.status(200).send("ok");
   } catch (err) {
     res.status(500).send("Unable to remove article");

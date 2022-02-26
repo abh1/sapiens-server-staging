@@ -1,4 +1,5 @@
 import { Article } from "../model/article";
+const mongoose = require("mongoose");
 
 const add = async (title: String, content: String, publicKey: string) => {
   const newArticle = new Article({
@@ -18,7 +19,7 @@ const get = async (_id: string) => {
 };
 
 const remove = async (_id: String, publicKey: string) => {
-  Article.deleteOne({
+  await Article.deleteOne({
     _id,
     owner: publicKey,
   });
