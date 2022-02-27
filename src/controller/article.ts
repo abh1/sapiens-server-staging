@@ -35,6 +35,26 @@ const update = async (req: express.Request, res: express.Response) => {
   }
 };
 
+const changeStatusToVote = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  const { id }: any = req.query;
+  //@ts-ignore
+  const publicKey = req.publicKey;
+  if (!publicKey) {
+    res.status(401).send("Unauthorized request");
+    return;
+  }
+  try {
+    await articleService.changeStatusToVote(id, publicKey);
+    res.status(200).send("ok");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Unable to add article");
+  }
+};
+
 const remove = async (req: express.Request, res: express.Response) => {
   const { id }: any = req.query;
   //@ts-ignore
@@ -73,4 +93,5 @@ export default {
   remove,
   list,
   get,
+  changeStatusToVote,
 };

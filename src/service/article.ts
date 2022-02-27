@@ -1,5 +1,4 @@
 import { Article } from "../model/article";
-const mongoose = require("mongoose");
 
 const add = async (title: String, content: String, publicKey: string) => {
   const newArticle = new Article({
@@ -70,10 +69,25 @@ const getArticlesOfUser = async (publicKey: string) => {
   return articleList;
 };
 
+const changeStatusToVote = async (id: string, publicKey: string) => {
+  await Article.updateOne(
+    {
+      _id: id,
+      owner: publicKey,
+    },
+    {
+      $set: {
+        status: "VOTE",
+      },
+    }
+  );
+};
+
 export default {
   add,
   remove,
   getArticlesOfUser,
   get,
   upsert,
+  changeStatusToVote,
 };
