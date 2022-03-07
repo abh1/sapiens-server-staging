@@ -18,7 +18,7 @@ const getAllArticlesFromBlockchain = async () => {
   const program = new Program(idl, programID, provider);
 
   const publicKey = new PublicKey(
-    "1YxP63M8r7kvhM5L1K3n8z2cZuNhDcVJMK8KoZuLQmE"
+    "J74UtXHDxgzfvaorBDxh9V3SSJ1fcASVX1UBc7XXDb28"
   );
 
   const res = await program.account.reportAccount.fetchMultiple([publicKey]);
