@@ -28,7 +28,8 @@ const upsert = async (
   id: string,
   content: String,
   heading: string,
-  publicKey: string
+  publicKey: string,
+  reportAccountPublicKey: string
 ) => {
   const article = await Article.findOne({
     _id: id,
@@ -52,6 +53,8 @@ const upsert = async (
       _id: id,
       content,
       heading,
+      owner: publicKey,
+      reportAccountPublicKey,
     });
     await newArticle.save();
   }

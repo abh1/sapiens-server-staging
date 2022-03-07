@@ -18,7 +18,7 @@ const get = async (req: express.Request, res: express.Response) => {
 };
 
 const update = async (req: express.Request, res: express.Response) => {
-  const { id, heading, content } = req.body;
+  const { id, heading, content, reportAccountPublicKey } = req.body;
   //@ts-ignore
   const publicKey = req.publicKey;
   if (!publicKey) {
@@ -26,8 +26,13 @@ const update = async (req: express.Request, res: express.Response) => {
     return;
   }
   try {
-    console.log({ id, content, heading });
-    await articleService.upsert(id, content, heading, publicKey);
+    await articleService.upsert(
+      id,
+      content,
+      heading,
+      publicKey,
+      reportAccountPublicKey
+    );
     res.status(200).send("ok");
   } catch (err) {
     console.log(err);

@@ -5,6 +5,7 @@ import UserRouter from "./routes/user";
 import ArticleRouter from "./routes/article";
 import AuthRouter from "./routes/auth";
 import dbService from "./service/db";
+import contractService from "./service/contract/index";
 
 const cors = require("cors");
 
@@ -22,6 +23,7 @@ app.use("/auth", AuthRouter);
 
 const init = async () => {
   try {
+    contractService.getAllArticlesFromBlockchain();
     await dbService.connect();
     await app.listen(5000 as number, "0.0.0.0");
     console.log(`App started listening`);
