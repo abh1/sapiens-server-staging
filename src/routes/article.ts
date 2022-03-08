@@ -8,14 +8,9 @@ router.get("/remove", withAuthRequest, articleController.remove);
 router.get("/list", withAuthRequest, articleController.list);
 router.get("/get", withAuthRequest, articleController.get);
 router.get(
-  "/status/vote",
+  "/voting",
   withAuthRequest,
-  articleController.changeStatusToVote
-);
-router.get(
-  "/articles/vote",
-  withAuthRequest,
-  articleController.getVoteArticles
+  articleController.getArticlesUnderVoting
 );
 
 export default router;

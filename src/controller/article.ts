@@ -93,7 +93,10 @@ const list = async (req: express.Request, res: express.Response) => {
   }
 };
 
-const getVoteArticles = async (req: express.Request, res: express.Response) => {
+const getArticlesUnderVoting = async (
+  req: express.Request,
+  res: express.Response
+) => {
   //@ts-ignore
   const publicKey = req.publicKey;
   if (!publicKey) {
@@ -101,10 +104,12 @@ const getVoteArticles = async (req: express.Request, res: express.Response) => {
     return;
   }
   try {
-    const articleList = await articleService.getVoteArticles(publicKey);
-    res.status(200).send(articleList);
+    const balance = await articleService.getArticlesUnderVoting(publicKey);
+
+    res.status(200).send({ balance });
   } catch (err) {
-    res.status(500).send("Unable to remove article");
+    console.log(err);
+    res.status(500).send("Unable to fetch articles");
   }
 };
 
@@ -113,6 +118,5 @@ export default {
   remove,
   list,
   get,
-  changeStatusToVote,
-  getVoteArticles,
+  getArticlesUnderVoting,
 };

@@ -23,17 +23,20 @@ const getAllArticlesFromBlockchain = async (
     (reportAccountPublicKey) => new PublicKey(reportAccountPublicKey)
   );
 
-  return await program.account.reportAccount.fetchMultiple(
+  const articles = await program.account.reportAccount.fetchMultiple(
     reportAccountPublicKeyObjects
   );
+
+  return articles;
 };
 
 const doesAddressOwnSapienToken = async (userPublicKey: string) => {
+  const minimumBalance = 1;
   const balance = await getBalance(
     userPublicKey,
     process.env.SAPIEN_TOKEN_MINT_ADDRESS as string
   );
-  return balance;
+  return balance > minimumBalance;
 };
 
 function getProvider(wallet: any) {
@@ -68,7 +71,8 @@ const getBalance = async (walletAddress: string, tokenMintAddress: string) => {
       },
     ],
   });
-  return response;
+  return response.data[0].result.value[0].account.data.parsed.info.tokenAmount
+    .uiAmount;
 };
 
 export default {

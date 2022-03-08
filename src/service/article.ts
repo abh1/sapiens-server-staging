@@ -1,6 +1,8 @@
 import { Article } from "../model/article";
 import contractService from "./contract/index";
 
+const VOTING_STATUS = 0;
+
 const add = async (title: String, content: String, publicKey: string) => {
   const newArticle = new Article({
     owner: publicKey,
@@ -87,7 +89,7 @@ const changeStatusToVote = async (id: string, publicKey: string) => {
   );
 };
 
-const getVoteArticles = async (userPublicKey: string) => {
+const getArticlesUnderVoting = async (userPublicKey: string) => {
   const doesUserOwnTokens = await contractService.doesAddressOwnSapienToken(
     userPublicKey
   );
@@ -96,9 +98,19 @@ const getVoteArticles = async (userPublicKey: string) => {
     const reportAccountPublicKeys = articlesList.map(
       (article) => article.reportAccountPublicKey
     );
-    return contractService.getAllArticlesFromBlockchain(
+    const articles = await contractService.getAllArticlesFromBlockchain(
       reportAccountPublicKeys
     );
+    const idsOfArticlesUnderVoting = articles
+      .filter((article: any) => article.status === VOTING_STATUS)
+      .map((article: any) => article.uri);
+    const result = await Article.find({
+      _id: {
+        $in: [idsOfArticlesUnderVoting],
+      },
+    });
+    console.log(result);
+    return result;
   } else {
     throw new Error("User does not own sapien tokens");
   }
@@ -111,5 +123,5 @@ export default {
   get,
   upsert,
   changeStatusToVote,
-  getVoteArticles,
+  getArticlesUnderVoting,
 };
