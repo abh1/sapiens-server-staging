@@ -23,7 +23,6 @@ app.use("/auth", AuthRouter);
 
 const init = async () => {
   try {
-    contractService.getAllArticlesFromBlockchain();
     await dbService.connect();
     await app.listen(5000 as number, "0.0.0.0");
     console.log(`App started listening`);

@@ -1,4 +1,5 @@
 import { Article } from "../model/article";
+import contractService from "./contract/index";
 
 const add = async (title: String, content: String, publicKey: string) => {
   const newArticle = new Article({
@@ -86,6 +87,23 @@ const changeStatusToVote = async (id: string, publicKey: string) => {
   );
 };
 
+const getVoteArticles = async (userPublicKey: string) => {
+  const doesUserOwnTokens = await contractService.doesAddressOwnSapienToken(
+    userPublicKey
+  );
+  if (doesUserOwnTokens) {
+    const articlesList = await Article.find();
+    const reportAccountPublicKeys = articlesList.map(
+      (article) => article.reportAccountPublicKey
+    );
+    return contractService.getAllArticlesFromBlockchain(
+      reportAccountPublicKeys
+    );
+  } else {
+    throw new Error("User does not own sapien tokens");
+  }
+};
+
 export default {
   add,
   remove,
@@ -93,4 +111,5 @@ export default {
   get,
   upsert,
   changeStatusToVote,
+  getVoteArticles,
 };

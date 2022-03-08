@@ -12,5 +12,10 @@ router.get(
   withAuthRequest,
   articleController.changeStatusToVote
 );
+router.get(
+  "/articles/vote",
+  withAuthRequest,
+  articleController.getVoteArticles
+);
 
 export default router;

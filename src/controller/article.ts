@@ -93,10 +93,26 @@ const list = async (req: express.Request, res: express.Response) => {
   }
 };
 
+const getVoteArticles = async (req: express.Request, res: express.Response) => {
+  //@ts-ignore
+  const publicKey = req.publicKey;
+  if (!publicKey) {
+    res.status(401).send("Unauthorized request");
+    return;
+  }
+  try {
+    const articleList = await articleService.getVoteArticles(publicKey);
+    res.status(200).send(articleList);
+  } catch (err) {
+    res.status(500).send("Unable to remove article");
+  }
+};
+
 export default {
   update,
   remove,
   list,
   get,
   changeStatusToVote,
+  getVoteArticles,
 };

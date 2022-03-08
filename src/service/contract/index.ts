@@ -1,29 +1,39 @@
 import { Program, Provider, web3, Wallet } from "@project-serum/anchor";
 import { Connection, PublicKey } from "@solana/web3.js";
+require("dotenv").config();
+import axios from "axios";
 
 const { Keypair } = web3;
-const network = "https://api.devnet.solana.com";
+const network = process.env.NETWORK as string;
 const idl = require("./idl.json");
 
-const getAllArticlesFromBlockchain = async () => {
+const getAllArticlesFromBlockchain = async (
+  reportAccountPublicKeys: string[]
+) => {
   const keyPair = new Keypair();
   const wallet = new Wallet(keyPair);
 
   const provider = getProvider(wallet);
 
-  const programID = new PublicKey(
-    "3Z8eqLzepWH6UmqFyU9mDsjQp6QepLURqHSBFwmJLdCh"
-  );
+  const programID = new PublicKey(process.env.PROGRAM_ID as string);
 
   const program = new Program(idl, programID, provider);
 
-  const publicKey = new PublicKey(
-    "J74UtXHDxgzfvaorBDxh9V3SSJ1fcASVX1UBc7XXDb28"
+  const reportAccountPublicKeyObjects = reportAccountPublicKeys.map(
+    (reportAccountPublicKey) => new PublicKey(reportAccountPublicKey)
   );
 
-  const res = await program.account.reportAccount.fetchMultiple([publicKey]);
+  return await program.account.reportAccount.fetchMultiple(
+    reportAccountPublicKeyObjects
+  );
+};
 
-  console.log(res);
+const doesAddressOwnSapienToken = async (userPublicKey: string) => {
+  const balance = await getBalance(
+    userPublicKey,
+    process.env.SAPIEN_TOKEN_MINT_ADDRESS as string
+  );
+  return balance;
 };
 
 function getProvider(wallet: any) {
@@ -36,6 +46,32 @@ function getProvider(wallet: any) {
   return provider;
 }
 
+const getBalance = async (walletAddress: string, tokenMintAddress: string) => {
+  const response = await axios({
+    url: network,
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    data: [
+      {
+        jsonrpc: "2.0",
+        id: 1,
+        method: "getTokenAccountsByOwner",
+        params: [
+          walletAddress,
+          {
+            mint: tokenMintAddress,
+          },
+          {
+            encoding: "jsonParsed",
+          },
+        ],
+      },
+    ],
+  });
+  return response;
+};
+
 export default {
   getAllArticlesFromBlockchain,
+  doesAddressOwnSapienToken,
 };
