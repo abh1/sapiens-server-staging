@@ -4,8 +4,8 @@ import MainRouter from "./routes/main";
 import UserRouter from "./routes/user";
 import ArticleRouter from "./routes/article";
 import AuthRouter from "./routes/auth";
+import FaucetRouter from "./routes/faucet";
 import dbService from "./service/db";
-import contractService from "./service/contract/index";
 
 const cors = require("cors");
 
@@ -20,6 +20,7 @@ app.use("/", MainRouter);
 app.use("/user", UserRouter);
 app.use("/article", ArticleRouter);
 app.use("/auth", AuthRouter);
+app.use("/faucet", FaucetRouter);
 
 const init = async () => {
   try {
