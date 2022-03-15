@@ -16,9 +16,9 @@ export const send = async (toAddress: any) => {
   let secretKeyB58 = bs58.decode(secretKeyString);
   let keypair = Keypair.fromSecretKey(secretKeyB58);
 
-  const connection = new Connection("https://api.devnet.solana.com");
+  const connection = new Connection(process.env.NETWORK as string);
 
-  const mint = new PublicKey("3qq7ExpwRRAAexGNpUVoFkiTfSB1uo8ezsbyAoxhyryo");
+  const mint = new PublicKey(process.env.TOKEN_MINT_ADDRESS as string);
 
   let fromAccount = await splToken.getOrCreateAssociatedTokenAccount(
     connection,
@@ -45,13 +45,9 @@ export const send = async (toAddress: any) => {
     )
   );
 
-  console.log("before");
-
   const signature = await sendAndConfirmTransaction(connection, transaction, [
     keypair,
   ]);
-
-  console.log("before");
 
   const response = await connection.confirmTransaction(signature, "processed");
 
