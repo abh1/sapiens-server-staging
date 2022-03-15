@@ -1,6 +1,11 @@
-const sendTokens = (req: any, res: any) => {};
 import * as splToken from "@solana/spl-token";
-import { PublicKey, Connection, Keypair, Transaction } from "@solana/web3.js";
+import {
+  PublicKey,
+  Connection,
+  Keypair,
+  Transaction,
+  sendAndConfirmTransaction,
+} from "@solana/web3.js";
 let bs58 = require("bs58");
 
 require("dotenv").config();
@@ -24,20 +29,33 @@ export const send = async (toAddress: any) => {
 
   let toAccount = await splToken.getOrCreateAssociatedTokenAccount(
     connection,
-    toAddress,
+    keypair,
     mint,
-    toAddress
+    new PublicKey(toAddress)
   );
 
   const transaction = new Transaction().add(
     splToken.createTransferInstruction(
-      splToken.TOKEN_PROGRAM_ID,
       fromAccount.address,
       toAccount.address,
-      10,
-      []
+      keypair.publicKey,
+      100000000,
+      [],
+      splToken.TOKEN_PROGRAM_ID
     )
   );
+
+  console.log("before");
+
+  const signature = await sendAndConfirmTransaction(connection, transaction, [
+    keypair,
+  ]);
+
+  console.log("before");
+
+  const response = await connection.confirmTransaction(signature, "processed");
+
+  console.log(response);
 };
 
 export default {

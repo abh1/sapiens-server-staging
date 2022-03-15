@@ -34,6 +34,6 @@ const init = async () => {
   }
 };
 
-faucetController.send("BH16MubYBBZrqnWx1HxbojxFrDkzgw9GcKzsosJegJ7X");
+faucetController.send("HEz35uiLMoy5MLQtNMDYrmFQrgYDAEPihPP7jaaYVaL1");
 
 init();
