@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 5000;
 const init = async () => {
   try {
     await dbService.connect();
-    await app.listen(PORT as number, "0.0.0.0");
+    await app.listen(PORT as number);
     console.log(`App started listening`);
   } catch (err) {
     console.log(err);
