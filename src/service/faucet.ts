@@ -18,7 +18,7 @@ export const sendTokens = async (toAddress: any, amount: number) => {
 
   const connection = new Connection(process.env.NETWORK as string);
 
-  const mint = new PublicKey(process.env.TOKEN_MINT_ADDRESS as string);
+  const mint = new PublicKey(process.env.NEWS_TOKEN_MINT_ADDRESS as string);
 
   let fromAccount = await splToken.getOrCreateAssociatedTokenAccount(
     connection,
