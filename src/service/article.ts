@@ -1,7 +1,8 @@
 import { Article } from "../model/article";
 import contractService from "./contract/index";
+const mongoose = require("mongoose");
 
-const VOTING_STATUS = 0;
+const VOTING_STATUS = 1;
 
 const add = async (title: String, content: String, publicKey: string) => {
   const newArticle = new Article({
@@ -101,15 +102,17 @@ const getArticlesUnderVoting = async (userPublicKey: string) => {
     const articles = await contractService.getAllArticlesFromBlockchain(
       reportAccountPublicKeys
     );
+
     const idsOfArticlesUnderVoting = articles
       .filter((article: any) => article.status === VOTING_STATUS)
       .map((article: any) => article.uri);
+
     const result = await Article.find({
       _id: {
-        $in: [idsOfArticlesUnderVoting],
+        $in: idsOfArticlesUnderVoting,
       },
     });
-    console.log(result);
+
     return result;
   } else {
     throw new Error("User does not own sapien tokens");

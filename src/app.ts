@@ -6,7 +6,6 @@ import ArticleRouter from "./routes/article";
 import AuthRouter from "./routes/auth";
 import FaucetRouter from "./routes/faucet";
 import dbService from "./service/db";
-import faucetController from "./controller/faucet";
 
 const cors = require("cors");
 
