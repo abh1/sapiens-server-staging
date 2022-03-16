@@ -1,6 +1,5 @@
 import { Program, Provider, web3, Wallet } from "@project-serum/anchor";
 import { Connection, PublicKey } from "@solana/web3.js";
-import wallet from "@vite/vitejs/distSrc/wallet";
 require("dotenv").config();
 import axios from "axios";
 import * as idl from "./idl.json";
