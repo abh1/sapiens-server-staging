@@ -1,5 +1,5 @@
-const main = (res: any) => {
-  res.send("App is up and running");
+const main = (req: any, res: any) => {
+  res.send("Server is up and running");
 };
 
 export default {
