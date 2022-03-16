@@ -2,10 +2,10 @@ import { Program, Provider, web3, Wallet } from "@project-serum/anchor";
 import { Connection, PublicKey } from "@solana/web3.js";
 require("dotenv").config();
 import axios from "axios";
+import * as idl from "./idl.json";
 
 const { Keypair } = web3;
 const network = process.env.NETWORK as string;
-const idl = require("./idl.json");
 
 const getAllArticlesFromBlockchain = async (
   reportAccountPublicKeys: string[]
@@ -17,7 +17,7 @@ const getAllArticlesFromBlockchain = async (
 
   const programID = new PublicKey(process.env.PROGRAM_ID as string);
 
-  const program = new Program(idl, programID, provider);
+  const program = new Program(idl as any, programID, provider);
 
   const reportAccountPublicKeyObjects = reportAccountPublicKeys.map(
     (reportAccountPublicKey) => new PublicKey(reportAccountPublicKey)
