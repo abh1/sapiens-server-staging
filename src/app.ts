@@ -35,4 +35,8 @@ const init = async () => {
   }
 };
 
+process.on("uncaughtException", function (err) {
+  console.log(err);
+});
+
 init();
