@@ -87,11 +87,13 @@ const list = async (req: express.Request, res: express.Response) => {
       _id: {
         $in: idsOfArticleInDraft,
       },
+      owner: publicKey,
     });
 
     res.status(200).send(result);
   } catch (err) {
-    res.status(500).send("Unable to remove article");
+    console.log(err);
+    res.status(500).send("Unable to fetch article");
   }
 };
 
