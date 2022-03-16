@@ -6,8 +6,6 @@ const solanaWeb3 = require("@solana/web3.js");
 const login = async (req: express.Request, res: express.Response) => {
   const { publicKey, message, signature } = req.body;
 
-  console.log({ publicKey, message, signature });
-
   try {
     if (!verify(message, signature, publicKey)) {
       res.status(400).send("Invalid signature");
@@ -17,7 +15,7 @@ const login = async (req: express.Request, res: express.Response) => {
       );
       const publicKeyString = publicKeyObject.toString();
       const authToken = await authService.login(publicKeyString);
-      console.log(authToken);
+
       res.status(200).send({
         authToken,
       });
