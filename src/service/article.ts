@@ -1,8 +1,9 @@
+import e from "express";
 import { Article } from "../model/article";
 import contractService from "./contract/index";
-const mongoose = require("mongoose");
 
 const VOTING_STATUS = 1;
+const DRAFT_STATUS = 0;
 
 const add = async (title: String, content: String, publicKey: string) => {
   const newArticle = new Article({
@@ -15,9 +16,27 @@ const add = async (title: String, content: String, publicKey: string) => {
 };
 
 const get = async (_id: string) => {
-  const result = await Article.findOne({
+  let result = await Article.findOne({
     _id,
   });
+
+  const articles: any = await contractService.getAllArticlesFromBlockchain([
+    result.reportAccountPublicKey,
+  ]);
+
+  let status;
+
+  if (articles[0].status === 1) {
+    status = "VOTING";
+  } else if (articles[0].status === 0) {
+    status = "DRAFT";
+  }
+
+  result = {
+    ...result._doc,
+    status,
+  };
+
   return result;
 };
 
