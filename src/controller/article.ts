@@ -2,6 +2,7 @@ import express from "express";
 import articleService from "../service/article";
 import { Article } from "../model/article";
 import contractService from "../service/contract";
+import article from "../service/article";
 
 const DRAFT_STATUS = 0;
 
@@ -83,12 +84,13 @@ const list = async (req: express.Request, res: express.Response) => {
       .filter((article: any) => article.status === DRAFT_STATUS)
       .map((article: any) => article.uri);
 
-    const result = await Article.find({
+    let result = await Article.find({
       _id: {
         $in: idsOfArticleInDraft,
       },
       owner: publicKey,
     });
+    result = result.map((article) => ({ ...article._doc, status: "VOTING" }));
 
     res.status(200).send(result);
   } catch (err) {
@@ -108,9 +110,13 @@ const getArticlesUnderVoting = async (
     return;
   }
   try {
-    const balance = await articleService.getArticlesUnderVoting(publicKey);
+    let articles = await articleService.getArticlesUnderVoting(publicKey);
+    articles = articles.map((article) => ({
+      ...article._doc,
+      status: "VOTING",
+    }));
 
-    res.status(200).send({ balance });
+    res.status(200).send({ articles });
   } catch (err) {
     console.log(err);
     res.status(500).send("Unable to fetch articles");
