@@ -96,9 +96,11 @@ const getArticlesUnderVoting = async (userPublicKey: string) => {
   );
   if (doesUserOwnTokens) {
     const articlesList = await Article.find();
+
     const reportAccountPublicKeys = articlesList.map(
       (article) => article.reportAccountPublicKey
     );
+
     const articles = await contractService.getAllArticlesFromBlockchain(
       reportAccountPublicKeys
     );

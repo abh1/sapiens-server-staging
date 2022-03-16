@@ -1,5 +1,9 @@
 import express from "express";
 import articleService from "../service/article";
+import { Article } from "../model/article";
+import contractService from "../service/contract";
+
+const DRAFT_STATUS = 0;
 
 const get = async (req: express.Request, res: express.Response) => {
   const { id }: any = req.query;
@@ -65,9 +69,27 @@ const list = async (req: express.Request, res: express.Response) => {
     return;
   }
   try {
-    const articleList = await articleService.getArticlesOfUser(publicKey);
+    const articlesList = await Article.find();
 
-    res.status(200).send(articleList);
+    const reportAccountPublicKeys = articlesList.map(
+      (article) => article.reportAccountPublicKey
+    );
+
+    const articles = await contractService.getAllArticlesFromBlockchain(
+      reportAccountPublicKeys
+    );
+
+    const idsOfArticleInDraft = articles
+      .filter((article: any) => article.status === DRAFT_STATUS)
+      .map((article: any) => article.uri);
+
+    const result = await Article.find({
+      _id: {
+        $in: idsOfArticleInDraft,
+      },
+    });
+
+    res.status(200).send(result);
   } catch (err) {
     res.status(500).send("Unable to remove article");
   }
