@@ -49,7 +49,7 @@ export const sendTokens = async (toAddress: any, amount: number) => {
     keypair,
   ]);
 
-  const response = await connection.confirmTransaction(signature, "processed");
+  await connection.confirmTransaction(signature, "processed");
 };
 
 export default {
