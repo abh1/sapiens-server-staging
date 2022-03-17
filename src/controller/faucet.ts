@@ -37,7 +37,7 @@ const sendSapienTokens = async (
     console.log(publicKey);
     const article = await faucetService.sendTokens(
       publicKey,
-      10000000000,
+      1000000000,
       process.env.DAO_TOKEN_MINT_ADDRESS as string
     );
     res.status(200).send(article);
