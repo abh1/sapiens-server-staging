@@ -1,7 +1,8 @@
 import express from "express";
 const router = express.Router();
 import faucetController from "../controller/faucet";
+import { withAuthRequest } from "../middleware/auth";
 
-router.get("/request", faucetController.sendTokens);
+router.get("/request", withAuthRequest, faucetController.sendTokens);
 
 export default router;
