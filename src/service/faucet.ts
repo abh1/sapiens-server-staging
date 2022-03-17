@@ -8,9 +8,11 @@ import {
 } from "@solana/web3.js";
 let bs58 = require("bs58");
 
-require("dotenv").config();
-
-export const sendTokens = async (toAddress: any, amount: number) => {
+export const sendTokens = async (
+  toAddress: any,
+  amount: number,
+  tokenAddress: string
+) => {
   let secretKeyString: string = process.env.WALLET_SECRET_KEY as string;
 
   let secretKeyB58 = bs58.decode(secretKeyString);
@@ -18,7 +20,7 @@ export const sendTokens = async (toAddress: any, amount: number) => {
 
   const connection = new Connection(process.env.NETWORK as string);
 
-  const mint = new PublicKey(process.env.NEWS_TOKEN_MINT_ADDRESS as string);
+  const mint = new PublicKey(tokenAddress);
 
   let fromAccount = await splToken.getOrCreateAssociatedTokenAccount(
     connection,
