@@ -9,6 +9,7 @@ const sendTokens = async (req: express.Request, res: express.Response) => {
     return;
   }
   try {
+    console.log(publicKey);
     const article = await faucetService.sendTokens(publicKey, 1000000000);
     res.status(200).send(article);
   } catch (err) {
