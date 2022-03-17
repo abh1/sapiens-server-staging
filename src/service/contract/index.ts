@@ -24,11 +24,11 @@ const getAllArticlesFromBlockchain = async (
     (reportAccountPublicKey) => new PublicKey(reportAccountPublicKey)
   );
 
-  const articles = await program.account.reportAccount.fetchMultiple(
+  let articles = await program.account.reportAccount.fetchMultiple(
     reportAccountPublicKeyObjects
   );
 
-  console.log(articles);
+  articles = articles.filter((article: any) => article.uri !== "");
 
   return articles;
 };
