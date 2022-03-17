@@ -10,6 +10,7 @@ const network = process.env.NETWORK as string;
 const getAllArticlesFromBlockchain = async (
   reportAccountPublicKeys: string[]
 ) => {
+  reportAccountPublicKeys = reportAccountPublicKeys.filter((a) => a);
   const keyPair = new Keypair();
   const wallet = new Wallet(keyPair);
 
@@ -26,6 +27,8 @@ const getAllArticlesFromBlockchain = async (
   const articles = await program.account.reportAccount.fetchMultiple(
     reportAccountPublicKeyObjects
   );
+
+  console.log(articles);
 
   return articles;
 };
