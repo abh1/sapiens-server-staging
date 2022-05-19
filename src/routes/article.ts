@@ -6,11 +6,7 @@ import { withAuthRequest } from "../middleware/auth";
 router.post("/update", withAuthRequest, articleController.update);
 router.get("/remove", withAuthRequest, articleController.remove);
 router.get("/list", withAuthRequest, articleController.list);
-router.get(
-  "/list/published",
-  withAuthRequest,
-  articleController.listAllPublishedArticles
-);
+router.get("/published", articleController.listAllPublishedArticles);
 router.get("/get", withAuthRequest, articleController.get);
 router.get(
   "/voting",

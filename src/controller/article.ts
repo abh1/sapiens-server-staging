@@ -2,10 +2,11 @@ import express from "express";
 import articleService from "../service/article";
 import { Article } from "../model/article";
 import contractService from "../service/contract";
-import article from "../service/article";
+
+require("dotenv").config();
 
 const DRAFT_STATUS = 0;
-const PUBLISHED_STATUS = 3;
+const PUBLISHED_STATUS = Number(process.env.PUBLISHED_STATUS);
 
 const get = async (req: express.Request, res: express.Response) => {
   const { id }: any = req.query;
