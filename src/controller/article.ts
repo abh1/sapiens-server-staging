@@ -5,6 +5,7 @@ import contractService from "../service/contract";
 import article from "../service/article";
 
 const DRAFT_STATUS = 0;
+const PUBLISHED_STATUS = 3;
 
 const get = async (req: express.Request, res: express.Response) => {
   const { id }: any = req.query;
@@ -99,6 +100,43 @@ const list = async (req: express.Request, res: express.Response) => {
   }
 };
 
+const listAllPublishedArticles = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const articlesList = await Article.find();
+
+    const reportAccountPublicKeys = articlesList.map(
+      (article) => article.reportAccountPublicKey
+    );
+
+    const articles = await contractService.getAllArticlesFromBlockchain(
+      reportAccountPublicKeys
+    );
+
+    const idOfPublishedArticles = articles
+      .filter((article: any) => article.status === PUBLISHED_STATUS)
+      .map((article: any) => article.uri);
+
+    let result = await Article.find({
+      _id: {
+        $in: idOfPublishedArticles,
+      },
+    });
+
+    result = result.map((article) => ({
+      ...article._doc,
+      status: "PUBLISHED",
+    }));
+
+    res.status(200).send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Unable to fetch article");
+  }
+};
+
 const getArticlesUnderVoting = async (
   req: express.Request,
   res: express.Response
@@ -129,4 +167,5 @@ export default {
   list,
   get,
   getArticlesUnderVoting,
+  listAllPublishedArticles,
 };

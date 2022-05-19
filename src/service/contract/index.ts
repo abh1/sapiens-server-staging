@@ -34,7 +34,7 @@ const getAllArticlesFromBlockchain = async (
 };
 
 const doesAddressOwnSapienToken = async (userPublicKey: string) => {
-  const minimumBalance = 1;
+  const minimumBalance = 100;
   const balance = await getBalance(
     userPublicKey,
     process.env.DAO_TOKEN_MINT_ADDRESS as string
