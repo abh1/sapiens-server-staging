@@ -2,8 +2,8 @@ import e from "express";
 import { Article } from "../model/article";
 import contractService from "./contract/index";
 
-const VOTING_STATUS = 1;
-const DRAFT_STATUS = 0;
+const VOTING_STATUS = Number(process.env.VOTING_STATUS);
+const DRAFT_STATUS = Number(process.env.DRAFT_STATUS);
 
 const add = async (title: String, content: String, publicKey: string) => {
   const newArticle = new Article({
