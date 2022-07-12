@@ -5,7 +5,7 @@ import contractService from "../service/contract";
 
 require("dotenv").config();
 
-const DRAFT_STATUS = 0;
+const DRAFT_STATUS = Number(process.env.DRAFT_STATUS);
 const PUBLISHED_STATUS = Number(process.env.PUBLISHED_STATUS);
 
 const get = async (req: express.Request, res: express.Response) => {
