@@ -30,6 +30,11 @@ const getAllArticlesFromBlockchain = async (
 
   articles = articles.filter((article: any) => article.uri !== "");
 
+  console.log("getAllArticlesFromBlockchain");
+  console.log(programID);
+  console.log(reportAccountPublicKeyObjects.toString);
+  console.log(reportAccountPublicKeyObjects.toString);
+
   return articles;
 };
 
