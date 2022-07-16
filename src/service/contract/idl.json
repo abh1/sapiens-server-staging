@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "name": "newsreport",
+  "name": "drafting",
   "instructions": [
     {
       "name": "initialize",
@@ -14,6 +14,21 @@
           "name": "authority",
           "isMut": true,
           "isSigner": true
+        },
+        {
+          "name": "newstoken",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "from",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -35,6 +50,21 @@
           "name": "authority",
           "isMut": false,
           "isSigner": true
+        },
+        {
+          "name": "newstoken",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "from",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -63,19 +93,54 @@
           "isSigner": true
         },
         {
+          "name": "newstoken",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "from",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
         }
       ],
-      "args": [
+      "args": []
+    },
+    {
+      "name": "publish",
+      "accounts": [
         {
-          "name": "reportUri",
-          "type": "string"
+          "name": "reportAccount",
+          "isMut": true,
+          "isSigner": false
         },
         {
-          "name": "payamt",
-          "type": "u32"
+          "name": "governance",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "statusDecision",
+          "type": "u8"
+        },
+        {
+          "name": "pda",
+          "type": "publicKey"
+        },
+        {
+          "name": "bump",
+          "type": "u8"
         }
       ]
     }
@@ -97,16 +162,12 @@
           {
             "name": "status",
             "type": "u8"
-          },
-          {
-            "name": "readpayment",
-            "type": "u32"
           }
         ]
       }
     }
   ],
   "metadata": {
-    "address": "3Z8eqLzepWH6UmqFyU9mDsjQp6QepLURqHSBFwmJLdCh"
+    "address": "BDxFK1pXTk1FsmGmqkhZzk8ptNXvyEX6WQJcacwLDnVC"
   }
 }
