@@ -28,15 +28,15 @@ const getAllArticlesFromBlockchain = async (
     reportAccountPublicKeyObjects
   );
 
-  console.log(reportAccountPublicKeyObjects);
-  console.log(articles);
 
-  articles = articles.filter((article: any) => article.uri !== "");
+
+  //articles = articles.filter((article: any) => article.uri !== "");
 
   console.log("getAllArticlesFromBlockchain");
   console.log(process.env.PROGRAM_ID as string);
 
-
+  console.log(reportAccountPublicKeyObjects);
+  console.log(articles);
 
   return articles;
 };
