@@ -23,10 +23,12 @@ const getAllArticlesFromBlockchain = async (
   console.log("getAllArticlesFromBlockchain23");
   const reportAccountPublicKeyObjects = reportAccountPublicKeys.map(
     function(reportAccountPublicKey) {
-    if(reportAccountPublicKey.charAt(0) != "/"){
-      (reportAccountPublicKey) => new PublicKey(reportAccountPublicKey)
+      console.log(reportAccountPublicKey);
+      console.log(reportAccountPublicKey.charAt(0));
+    if(reportAccountPublicKey.charAt(0) == "/"){
+      (reportAccountPublicKey) => new PublicKey("4tXjhLjhLSdDBoV8y7UfDrtL9sut8RrLN96LP5GybFrp");
     }else{
-      (reportAccountPublicKey) => new PublicKey("4tXjhLjhLSdDBoV8y7UfDrtL9sut8RrLN96LP5GybFrp")
+      (reportAccountPublicKey) => new PublicKey(reportAccountPublicKey);
     }
 
 });
