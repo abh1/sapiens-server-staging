@@ -22,11 +22,9 @@ const getAllArticlesFromBlockchain = async (
   const program = new Program(idl as any, programID, provider);
   console.log("getAllArticlesFromBlockchain23");
   const reportAccountPublicKeyObjects = reportAccountPublicKeys.map(
-    function(reportAccountPublicKey) {
-      console.log(reportAccountPublicKey);
-      console.log(reportAccountPublicKey.charAt(0));
+    (reportAccountPublicKey) => function(reportAccountPublicKey) {
     if(reportAccountPublicKey.charAt(0) == "/"){
-      return new PublicKey("4tXjhLjhLSdDBoV8y7UfDrtL9sut8RrLN96LP5GybFrp");
+      return new PublicKey("Cup8mogAvtdxKQMXbRHptuwpxSqyr4GGhyM5dBiyvgbT");
     }else{
       return new PublicKey(reportAccountPublicKey);
     }
