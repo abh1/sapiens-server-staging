@@ -123,7 +123,7 @@ const listAllPublishedArticles = async (
     const idOfPublishedArticles = articles
       .filter((article: any) => article.status === PUBLISHED_STATUS)
       .map((article: any) => article.uri);
-      console.log("126");
+      console.log(idOfPublishedArticles);
     let result = await Article.find({
       _id: {
         $in: idOfPublishedArticles,
