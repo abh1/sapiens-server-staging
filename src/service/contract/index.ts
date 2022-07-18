@@ -22,8 +22,14 @@ const getAllArticlesFromBlockchain = async (
   const program = new Program(idl as any, programID, provider);
   console.log("getAllArticlesFromBlockchain23");
   const reportAccountPublicKeyObjects = reportAccountPublicKeys.map(
-    (reportAccountPublicKey) => new PublicKey(reportAccountPublicKey)
-  );
+    function(reportAccountPublicKey) {
+    if(reportAccountPublicKey.charAt(0) != "/"){
+      (reportAccountPublicKey) => new PublicKey(reportAccountPublicKey)
+    }else{
+      (reportAccountPublicKey) => new PublicKey("4tXjhLjhLSdDBoV8y7UfDrtL9sut8RrLN96LP5GybFrp")
+    }
+
+});
   console.log("getAllArticlesFromBlockchain27");
   let articles = await program.account.reportAccount.fetchMultiple(
     reportAccountPublicKeyObjects
