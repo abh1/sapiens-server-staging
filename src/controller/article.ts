@@ -112,7 +112,7 @@ const listAllPublishedArticles = async (
     console.log(articlesList);
 
     const reportAccountPublicKeys = articlesList.filter(
-      (article: any) => article.reportAccountPublicKey.charAt(0) == "/"
+      (article: any) => article.reportAccountPublicKey.charAt(0) != "/"
     ).map(
       (article: any) => article.reportAccountPublicKey
     );
