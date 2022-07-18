@@ -121,7 +121,7 @@ const listAllPublishedArticles = async (
 
     const idOfRSSfedArticles = articlesList.filter(
       (article: any) => article.reportAccountPublicKey.charAt(0) == "/"
-    ).map((article: any) => article._id.str);
+    ).map((article: any) => article._id.toString());
 
     console.log("117");
 
