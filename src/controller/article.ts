@@ -108,24 +108,11 @@ const listAllPublishedArticles = async (
   try {
     const articlesList = await Article.find();
 
-    console.log("111");
-    console.log(articlesList);
-
     const reportAccountPublicKeys = articlesList.filter(
       (article: any) => article.reportAccountPublicKey.charAt(0) != "/"
     ).map(
       (article: any) => article.reportAccountPublicKey
     );
-
-    console.log("reportAccountPublicKeys:",reportAccountPublicKeys);
-
-    const idOfRSSfedArticles = articlesList.filter(
-      (article: any) => article.reportAccountPublicKey.charAt(0) == "/"
-    ).map((article: any) => article._id.toString());
-
-    console.log("117");
-
-    console.log("idOfRSSfedArticles:",idOfRSSfedArticles);
 
     const articles = await contractService.getAllArticlesFromBlockchain(
       reportAccountPublicKeys
@@ -136,18 +123,10 @@ const listAllPublishedArticles = async (
     const idOfPublishedArticles = articles
       .filter((article: any) => article.status === PUBLISHED_STATUS)
       .map((article: any) => article.uri);
-
-      console.log("140");
-
-    const ids2find = idOfPublishedArticles.concat(idOfRSSfedArticles)
-
-      console.log(idOfPublishedArticles);
-      console.log(idOfRSSfedArticles);
-      console.log(ids2find);
     
     let result = await Article.find({
       _id: {
-        $in: ids2find,
+        $in: idOfPublishedArticles,
       },
     });
 

@@ -116,9 +116,15 @@ const getArticlesUnderVoting = async (userPublicKey: string) => {
   if (doesUserOwnTokens) {
     const articlesList = await Article.find();
 
-    const reportAccountPublicKeys = articlesList.map(
-      (article) => article.reportAccountPublicKey
+    const reportAccountPublicKeys = articlesList.filter(
+      (article: any) => article.reportAccountPublicKey.charAt(0) != "/"
+    ).map(
+      (article: any) => article.reportAccountPublicKey
     );
+
+    const idOfRSSfedArticles = articlesList.filter(
+      (article: any) => article.reportAccountPublicKey.charAt(0) == "/"
+    ).map((article: any) => article._id.toString());
 
     const articles = await contractService.getAllArticlesFromBlockchain(
       reportAccountPublicKeys
@@ -128,9 +134,11 @@ const getArticlesUnderVoting = async (userPublicKey: string) => {
       .filter((article: any) => article.status === VOTING_STATUS)
       .map((article: any) => article.uri);
 
+    const ids2vote = idsOfArticlesUnderVoting.concat(idOfRSSfedArticles)
+
     const result = await Article.find({
       _id: {
-        $in: idsOfArticlesUnderVoting,
+        $in: ids2vote,
       },
     });
 
