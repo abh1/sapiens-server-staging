@@ -111,9 +111,15 @@ const listAllPublishedArticles = async (
     console.log("111");
     console.log(articlesList);
 
-    const reportAccountPublicKeys = articlesList.map(
+    const reportAccountPublicKeys = articlesList.filter(
+      (article: any) => article.reportAccountPublicKey.charAt(0) == "/"
+    ).map(
       (article) => article.reportAccountPublicKey
     );
+
+    const idOfRSSfedArticles = articlesList.filter(
+      (article: any) => article.reportAccountPublicKey.charAt(0) == "/"
+    ).map((article: any) => article.uri);
 
     console.log("117");
 
@@ -126,9 +132,12 @@ const listAllPublishedArticles = async (
     const idOfPublishedArticles = articles
       .filter((article: any) => article.status === PUBLISHED_STATUS)
       .map((article: any) => article.uri);
+
+      const ids2find = idOfPublishedArticles.push(idOfRSSfedArticles)
+
     let result = await Article.find({
       _id: {
-        $in: idOfPublishedArticles,
+        $in: ids2find,
       },
     });
 
