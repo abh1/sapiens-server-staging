@@ -142,7 +142,7 @@ const listAllPublishedArticles = async (
     const ids2find = idOfPublishedArticles.push(idOfRSSfedArticles)
 
 
-      console.log("145");
+      console.log(ids2find);
     
     let result = await Article.find({
       _id: {
