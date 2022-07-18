@@ -114,14 +114,18 @@ const listAllPublishedArticles = async (
     const reportAccountPublicKeys = articlesList.filter(
       (article: any) => article.reportAccountPublicKey.charAt(0) == "/"
     ).map(
-      (article) => article.reportAccountPublicKey
+      (article: any) => article.reportAccountPublicKey
     );
+
+    console.log("reportAccountPublicKeys:",reportAccountPublicKeys);
 
     const idOfRSSfedArticles = articlesList.filter(
       (article: any) => article.reportAccountPublicKey.charAt(0) == "/"
     ).map((article: any) => article._id);
 
     console.log("117");
+
+    console.log("idOfRSSfedArticles:",idOfRSSfedArticles);
 
     const articles = await contractService.getAllArticlesFromBlockchain(
       reportAccountPublicKeys
