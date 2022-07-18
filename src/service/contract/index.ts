@@ -26,9 +26,9 @@ const getAllArticlesFromBlockchain = async (
       console.log(reportAccountPublicKey);
       console.log(reportAccountPublicKey.charAt(0));
     if(reportAccountPublicKey.charAt(0) == "/"){
-      return (reportAccountPublicKey) => new PublicKey("4tXjhLjhLSdDBoV8y7UfDrtL9sut8RrLN96LP5GybFrp");
+      return new PublicKey("4tXjhLjhLSdDBoV8y7UfDrtL9sut8RrLN96LP5GybFrp");
     }else{
-      return (reportAccountPublicKey) => new PublicKey(reportAccountPublicKey);
+      return new PublicKey(reportAccountPublicKey);
     }
 
 });
