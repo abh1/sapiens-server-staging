@@ -137,8 +137,13 @@ const listAllPublishedArticles = async (
       .filter((article: any) => article.status === PUBLISHED_STATUS)
       .map((article: any) => article.uri);
 
-      const ids2find = idOfPublishedArticles.push(idOfRSSfedArticles)
+      console.log("140");
 
+    const ids2find = idOfPublishedArticles.push(idOfRSSfedArticles)
+
+
+      console.log("145");
+    
     let result = await Article.find({
       _id: {
         $in: ids2find,
