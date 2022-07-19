@@ -36,42 +36,6 @@
           "isSigner": false
         }
       ],
-      "args": []
-    },
-    {
-      "name": "updateReport",
-      "accounts": [
-        {
-          "name": "reportAccount",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "newstoken",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "from",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
       "args": [
         {
           "name": "reportUri",
@@ -80,7 +44,7 @@
       ]
     },
     {
-      "name": "pushForVote",
+      "name": "post",
       "accounts": [
         {
           "name": "reportAccount",
@@ -117,6 +81,42 @@
     },
     {
       "name": "publish",
+      "accounts": [
+        {
+          "name": "reportAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "newstoken",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "from",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "censor",
       "accounts": [
         {
           "name": "reportAccount",
@@ -166,5 +166,8 @@
         ]
       }
     }
-  ]
+  ],
+  "metadata": {
+    "address": "6mdT7qYCStq6RoRaVpJ3s8NnM4Le4aDkEh5zKQn1vKYH"
+  }
 }
