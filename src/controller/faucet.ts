@@ -2,7 +2,7 @@ import express from "express";
 import faucetService from "../service/faucet";
 require("dotenv").config();
 
-const sendNewsTokens = async (req: express.Request, res: express.Response) => {
+/* const sendNewsTokens = async (req: express.Request, res: express.Response) => {
   //@ts-ignore
   const publicKey = req.publicKey;
   if (!publicKey) {
@@ -21,7 +21,7 @@ const sendNewsTokens = async (req: express.Request, res: express.Response) => {
     console.log(err);
     res.status(500).send("Unable to send tokens");
   }
-};
+}; */
 
 const sendSapienTokens = async (
   req: express.Request,
@@ -48,6 +48,6 @@ const sendSapienTokens = async (
 };
 
 export default {
-  sendNewsTokens,
+  // sendNewsTokens,
   sendSapienTokens,
 };
