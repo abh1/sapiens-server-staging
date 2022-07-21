@@ -61,10 +61,13 @@ const upsert = async (
   if (article && date_publish) {
     await Article.updateOne({_id: id},
       {$set: {content, heading, date_publish}});
+      console.log("upsert - 64");
   } else if (article) {
     await Article.updateOne({_id: id, owner: publicKey},
       {$set: {content, heading, reportAccountPublicKey}});
+      console.log("upsert - 68");
   } else {
+    console.log("upsert - 70");
     const newArticle = new Article({
       _id: id,
       content,
