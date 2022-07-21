@@ -25,7 +25,7 @@ const get = async (req: express.Request, res: express.Response) => {
 };
 
 const update = async (req: express.Request, res: express.Response) => {
-  const { id, heading, content, reportAccountPublicKey } = req.body;
+  const { id, heading, content, reportAccountPublicKey, date_publish } = req.body;
   //@ts-ignore
   const publicKey = req.publicKey;
   if (!publicKey) {
@@ -38,7 +38,8 @@ const update = async (req: express.Request, res: express.Response) => {
       content,
       heading,
       publicKey,
-      reportAccountPublicKey
+      reportAccountPublicKey,
+      date_publish
     );
     res.status(200).send("ok");
   } catch (err) {
