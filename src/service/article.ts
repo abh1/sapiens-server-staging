@@ -58,7 +58,7 @@ const upsert = async (
   const article = await Article.findOne({
     _id: id,
   });
-console.log(date_publish);
+  console.log("date - ",date_publish);
   if (article) {
     await Article.updateOne(
       {
