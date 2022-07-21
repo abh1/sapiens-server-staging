@@ -69,6 +69,8 @@ const upsert = async (
         $set: {
           content,
           heading,
+          reportAccountPublicKey,
+          date_publish,
         },
       }
     );
@@ -79,6 +81,7 @@ const upsert = async (
       heading,
       owner: publicKey,
       reportAccountPublicKey,
+      date_publish,
     });
     await newArticle.save();
   }
