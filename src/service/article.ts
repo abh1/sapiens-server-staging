@@ -52,7 +52,8 @@ const upsert = async (
   content: String,
   heading: string,
   publicKey: string,
-  reportAccountPublicKey: string
+  reportAccountPublicKey: string,
+  date_publish: string
 ) => {
   const article = await Article.findOne({
     _id: id,
