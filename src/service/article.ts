@@ -58,22 +58,12 @@ const upsert = async (
   const article = await Article.findOne({
     _id: id,
   });
-  console.log("date - ",date_publish);
-  if (article) {
-    await Article.updateOne(
-      {
-        _id: id,
-        owner: publicKey,
-      },
-      {
-        $set: {
-          content,
-          heading,
-          reportAccountPublicKey,
-          date_publish,
-        },
-      }
-    );
+  if (article && date_publish) {
+    await Article.updateOne({_id: id},
+      {$set: {content, heading, date_publish}});
+  } else if (article) {
+    await Article.updateOne({_id: id, owner: publicKey},
+      {$set: {content, heading, reportAccountPublicKey}});
   } else {
     const newArticle = new Article({
       _id: id,
