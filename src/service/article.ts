@@ -113,7 +113,7 @@ const getArticlesUnderVoting = async (userPublicKey: string) => {
   if (doesUserOwnTokens) {
     const articlesList = await Article.aggregate([
       {
-        $group: {content: null}
+        $group: {_id: "$content"}
       }]);
 
     const reportAccountPublicKeys = articlesList.filter(
