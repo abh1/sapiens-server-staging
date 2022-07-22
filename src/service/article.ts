@@ -116,9 +116,9 @@ const getArticlesUnderVoting = async (userPublicKey: string) => {
 
       console.log("gogo bears",unique_articlesList);
 
-    const articlesList = await Article.find({
+/*     const articlesList = await Article.find({
       _id: unique_articlesList.ids
-    });
+    }); */
 
     const reportAccountPublicKeys = articlesList.filter(
       (article: any) => article.reportAccountPublicKey.charAt(0) != "/"
