@@ -74,10 +74,8 @@ const list = async (req: express.Request, res: express.Response) => {
   }
   try {
     const articlesList = await Article.aggregate([
-      {
-        $group: {_id: "$content"}
+      {$group:{_id:{$first:"$content"}}
       }]);
-
 
     const reportAccountPublicKeys = articlesList.map(
       (article) => article.reportAccountPublicKey
@@ -112,8 +110,7 @@ const listAllPublishedArticles = async (
 ) => {
   try {
     const articlesList = await Article.aggregate([
-      {
-        $group: {_id: "$content"}
+      {$group:{_id:{$first:"$content"}}
       }]);
 
 
