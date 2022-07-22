@@ -74,9 +74,11 @@ const list = async (req: express.Request, res: express.Response) => {
   }
   try {
     const articlesList = await Article.aggregate([
-      {$group:{_id:"$_id",content:{$first: "$content"}}
+      {$group:{_id:"$_id", content:{$first: "$content"},owner:"$owner", date_publish:"$date_publish", image_url:"$image_url",
+                reportAccountPublicKey:"$reportAccountPublicKey", url:"$url", heading: "$heading", language: "$language"
+              }
       }]);
-      
+
     const reportAccountPublicKeys = articlesList.map(
       (article) => article.reportAccountPublicKey
     );
@@ -110,9 +112,10 @@ const listAllPublishedArticles = async (
 ) => {
   try {
     const articlesList = await Article.aggregate([
-      {$group:{_id:"$_id",content:{$first: "$content"}}
+      {$group:{_id:"$_id", content:{$first: "$content"},owner:"$owner", date_publish:"$date_publish", image_url:"$image_url",
+                reportAccountPublicKey:"$reportAccountPublicKey", url:"$url", heading: "$heading", language: "$language"
+              }
       }]);
-
 
     const reportAccountPublicKeys = articlesList.filter(
       (article: any) => article.reportAccountPublicKey.charAt(0) != "/"
