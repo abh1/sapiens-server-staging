@@ -114,11 +114,11 @@ const getArticlesUnderVoting = async (userPublicKey: string) => {
     const unique_articlesList = await Article.aggregate([ 
       {$group:{_id:"$url", content: "$content", ids:"$_id"}}]);
 
+      console.log("gogo bears",unique_articlesList);
+
     const articlesList = await Article.find({
       _id: unique_articlesList.ids
     });
-      
-      console.log("gogo bears",articlesList);
 
     const reportAccountPublicKeys = articlesList.filter(
       (article: any) => article.reportAccountPublicKey.charAt(0) != "/"
