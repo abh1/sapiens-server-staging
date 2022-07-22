@@ -111,13 +111,10 @@ const getArticlesUnderVoting = async (userPublicKey: string) => {
     userPublicKey
   );
   if (doesUserOwnTokens) {
-    const articlesList = await Article.aggregate([
-      {$project: {
-        _id:"$_id", content: "$content", owner:"$owner", date_publish:"$date_publish", image_url:"$image_url",
-      reportAccountPublicKey:"$reportAccountPublicKey", url:"$url", heading: "$heading", language: "$language"
-    }}, 
-      {$group:{_id:"$_id", content:{$first: "$content"}}
-      }]);
+    const articlesList = await Article.aggregate([ 
+      {$group:{_id:"$_id", content:{$first: "$content"}}},
+      {$project: {_id:"$_id", content: "$content", owner:"$owner", date_publish:"$date_publish", image_url:"$image_url",
+      reportAccountPublicKey:"$reportAccountPublicKey", url:"$url", heading: "$heading", language: "$language"}}]);
 
       
       console.log("gogo bears",articlesList);
