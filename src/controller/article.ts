@@ -74,10 +74,12 @@ const list = async (req: express.Request, res: express.Response) => {
   }
   try {
     const articlesList = await Article.aggregate([
-      {$group:{_id:"$_id", content:{$first: "$content"},owner:"$owner", date_publish:"$date_publish", image_url:"$image_url",
-                reportAccountPublicKey:"$reportAccountPublicKey", url:"$url", heading: "$heading", language: "$language"
-              }
-      }]);
+      {$project: {
+        _id:"$_id", content: "$content", owner:"$owner", date_publish:"$date_publish", image_url:"$image_url",
+      reportAccountPublicKey:"$reportAccountPublicKey", url:"$url", heading: "$heading", language: "$language"
+    }}, 
+      {$group:{_id:"$_id", content:{$first: "$content"}}
+    }]);
 
     const reportAccountPublicKeys = articlesList.map(
       (article) => article.reportAccountPublicKey
@@ -112,9 +114,11 @@ const listAllPublishedArticles = async (
 ) => {
   try {
     const articlesList = await Article.aggregate([
-      {$group:{_id:"$_id", content:{$first: "$content"},owner:"$owner", date_publish:"$date_publish", image_url:"$image_url",
-                reportAccountPublicKey:"$reportAccountPublicKey", url:"$url", heading: "$heading", language: "$language"
-              }
+      {$project: {
+        _id:"$_id", content: "$content", owner:"$owner", date_publish:"$date_publish", image_url:"$image_url",
+      reportAccountPublicKey:"$reportAccountPublicKey", url:"$url", heading: "$heading", language: "$language"
+    }}, 
+      {$group:{_id:"$_id", content:{$first: "$content"}}
       }]);
 
     const reportAccountPublicKeys = articlesList.filter(
