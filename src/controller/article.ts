@@ -79,10 +79,8 @@ const list = async (req: express.Request, res: express.Response) => {
       },
       {
         $group: {
-          _id: {
-          content: null,
-          url: null}
-        }
+          _id: "content",
+          _id: "url"}
       }]);
 
     const reportAccountPublicKeys = articlesList.map(
@@ -123,10 +121,8 @@ const listAllPublishedArticles = async (
       },
       {
         $group: {
-          _id: null,
-          content: null,
-          url: null
-        }
+          _id: "content",
+          _id: "url"}
       }]);
 
     const reportAccountPublicKeys = articlesList.filter(

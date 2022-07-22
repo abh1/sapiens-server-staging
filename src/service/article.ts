@@ -117,10 +117,8 @@ const getArticlesUnderVoting = async (userPublicKey: string) => {
       },
       {
         $group: {
-          _id: null,
-          content: null,
-          url: null
-        }
+          _id: "content",
+          _id: "url"}
       }]);
 
     const reportAccountPublicKeys = articlesList.filter(
