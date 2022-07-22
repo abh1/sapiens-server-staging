@@ -112,11 +112,11 @@ const getArticlesUnderVoting = async (userPublicKey: string) => {
   );
   if (doesUserOwnTokens) {
     const articlesList = await Article.aggregate([ 
-      {$group:{_id:"$content", owner:"$owner", date_publish:"$date_publish", image_url:"$image_url",
-      reportAccountPublicKey:"$reportAccountPublicKey", url:"$url", heading: "$heading", language: "$language", content:"$_id"}} 
-    ]);
+      {$group:{_id:{_id:"$_id", content: "$content", owner:"$owner", date_publish:"$date_publish", image_url:"$image_url",
+      reportAccountPublicKey:"$reportAccountPublicKey", url:"$url", heading: "$heading", language: "$language", content:{$first: "$content"}}}}]);
 
-      console.log("gogo bears", articlesList);
+      
+      console.log("gogo bears",articlesList);
 
     const reportAccountPublicKeys = articlesList.filter(
       (article: any) => article.reportAccountPublicKey.charAt(0) != "/"
