@@ -79,9 +79,9 @@ const list = async (req: express.Request, res: express.Response) => {
       },
       {
         $group: {
-          _id: null,
+          _id: {
           content: null,
-          url: null
+          url: null}
         }
       }]);
 
