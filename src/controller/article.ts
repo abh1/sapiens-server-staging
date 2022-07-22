@@ -75,7 +75,7 @@ const list = async (req: express.Request, res: express.Response) => {
   try {
     const articlesList = await Article.aggregate([
       {
-        $group: {content: 1}
+        $group: {content: null}
       }]);
 
 
@@ -113,7 +113,7 @@ const listAllPublishedArticles = async (
   try {
     const articlesList = await Article.aggregate([
       {
-        $group: {content: 1}
+        $group: {content: null}
       }]);
 
 
