@@ -73,7 +73,8 @@ const list = async (req: express.Request, res: express.Response) => {
     return;
   }
   try {
-    const articlesList = await Article.find().sort({date_publish:-1}).limit(200);
+    const articlesList = await Article.find().sort({date_publish:-1}).limit(50);
+    console.log(articlesList);
 
     const reportAccountPublicKeys = articlesList.map(
       (article) => article.reportAccountPublicKey
@@ -107,8 +108,8 @@ const listAllPublishedArticles = async (
   res: express.Response
 ) => {
   try {
-    const articlesList = await Article.find().sort({date_publish:-1}).limit(200);
-
+    const articlesList = await Article.find().sort({date_publish:-1}).limit(50);
+    console.log(articlesList);
 
     const reportAccountPublicKeys = articlesList.filter(
       (article: any) => article.reportAccountPublicKey.charAt(0) != "/"
