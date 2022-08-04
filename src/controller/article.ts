@@ -73,7 +73,7 @@ const list = async (req: express.Request, res: express.Response) => {
     return;
   }
   try {
-    const articlesList = await Article.find().sort({date_publish:-1}).limit(50);
+    const articlesList = await Article.find().sort({date_publish:-1}).limit(52);
     console.log(articlesList);
 
     const reportAccountPublicKeys = articlesList.map(
@@ -108,7 +108,7 @@ const listAllPublishedArticles = async (
   res: express.Response
 ) => {
   try {
-    const articlesList = await Article.find().sort({date_publish:-1}).limit(50);
+    const articlesList = await Article.find().sort({date_publish:-1}).limit(52);
     console.log(articlesList);
 
     const reportAccountPublicKeys = articlesList.filter(
@@ -120,7 +120,7 @@ const listAllPublishedArticles = async (
     const articles = await contractService.getAllArticlesFromBlockchain(
       reportAccountPublicKeys
     );
-
+ 
     console.log(articles);
 
     const idOfPublishedArticles = articles
