@@ -111,7 +111,7 @@ const getArticlesUnderVoting = async (userPublicKey: string) => {
     userPublicKey
   );
   if (doesUserOwnTokens) {
-    const articlesList = await Article.find().sort({date_publish:-1}).limit(100);
+    const articlesList = await Article.find().sort({date_publish:-1}).limit(52);
     console.log(articlesList);
 
     const reportAccountPublicKeys = articlesList.filter(
