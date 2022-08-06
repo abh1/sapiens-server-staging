@@ -6,7 +6,7 @@ const articleSchema = new mongoose.Schema({
   reportAccountPublicKey: String,
   author: String,
   owner: String,
-  date_publish: Date,
+  date_publish: String,
   url: String,
   image_url: String,
   language: String,
